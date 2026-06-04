@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Divya Nautiyal — Product Manager</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400&family=Syne:wght@700;800&display=swap');
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.65;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+ul,ol{list-style:none}
+button{border:none;background:none;cursor:pointer;font-family:inherit}
+
+*{cursor:none}
+#cursor{position:fixed;pointer-events:none;z-index:9999;width:20px;height:20px;transform:translate(-50%,-50%);transition:opacity .2s}
+#cursor::before{content:'+';font-family:var(--mono);font-size:18px;color:var(--accent);line-height:1;display:block;text-align:center}
+#cursor.hovering::before{color:var(--text)}
+a,button,.sb-item,.fchip,.proof-chip{cursor:none}
+
+:root{
+  --bg:#0D0D0D;
+  --surface:#111111;
+  --surface2:#171717;
+  --border:#1E1E1E;
+  --border2:#2C2C2C;
+  --accent:#D4FF00;
+  --accent-dim:rgba(212,255,0,0.08);
+  --accent-glow:rgba(212,255,0,0.03);
+  --text:#EFEFEF;
+  --muted:#888;
+  --dim:#444;
+  --nav-h:60px;
+  --nav:60px;
+  --max:1140px;
+  --pad:32px;
+  --serif:'Instrument Serif',Georgia,serif;
+  --sans:'Instrument Sans',system-ui,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+  --display:'Syne',sans-serif;
+}
+
+/* ── SCROLL PROGRESS ── */
+#prog{position:fixed;top:0;left:0;height:2px;width:0;background:var(--accent);z-index:3000;transition:width .08s linear}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:rgba(13,13,13,0.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);z-index:2000;display:flex;align-items:center;padding:0 32px}
+.nav-in{max-width:var(--max);margin:0 auto;width:100%;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:var(--display);font-weight:800;font-size:17px;color:var(--accent);letter-spacing:.06em}
+.nav-links{display:flex;align-items:center;gap:32px}
+.nav-links a{font-size:13px;color:var(--dim);transition:color .2s;font-weight:400;letter-spacing:.02em}
+.nav-links a:hover,.nav-links a.active{color:var(--text)}
+.nav-right{display:flex;align-items:center;gap:20px}
+.nav-avail{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dim);letter-spacing:.02em}
+.avail-dot{width:6px;height:6px;border-radius:50%;background:#22c55e;animation:pdot 2.5s ease-in-out infinite}
+@keyframes pdot{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,.4)}60%{box-shadow:0 0 0 5px rgba(34,197,94,0)}}
+.hbg{display:none;flex-direction:column;gap:5px;padding:4px}
+.hbg span{display:block;width:20px;height:1px;background:var(--muted);transition:all .3s}
+.hbg.open span:nth-child(1){transform:rotate(45deg) translate(4px,4px)}
+.hbg.open span:nth-child(2){opacity:0}
+.hbg.open span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px)}
+#mnav{display:none;position:fixed;top:var(--nav-h);left:0;right:0;background:var(--bg);border-bottom:1px solid var(--border);z-index:1999;padding:8px 32px 20px;flex-direction:column}
+#mnav.open{display:flex}
+#mnav a{display:block;padding:14px 0;font-size:14px;color:var(--muted);border-bottom:1px solid var(--border);transition:color .2s;letter-spacing:.01em}
+#mnav a:last-child{border-bottom:none}
+#mnav a:hover{color:var(--text)}
+
+/* ── HERO ── */
+#hero{min-height:100vh;display:flex;align-items:center;padding-top:var(--nav-h);position:relative;overflow:hidden}
+#hero::before{content:'';position:absolute;top:-30%;right:-15%;width:600px;height:600px;background:radial-gradient(circle,rgba(212,255,0,0.04) 0%,transparent 65%);pointer-events:none}
+.hero-in{max-width:var(--max);margin:0 auto;padding:80px 32px;width:100%}
+.hero-eyebrow{font-family:var(--mono);font-size:10px;color:var(--dim);letter-spacing:.14em;text-transform:uppercase;margin-bottom:24px;animation:fu .6s .0s both}
+.hero-name{font-family:var(--display);font-weight:800;font-size:84px;line-height:.96;color:var(--text);margin-bottom:20px;animation:fu .7s .08s both;letter-spacing:-.02em}
+.hero-tag{font-family:var(--display);font-weight:700;font-size:26px;color:var(--muted);margin-bottom:8px;line-height:1.3;animation:fu .7s .18s both;letter-spacing:-.01em}
+.cursor-b{display:inline-block;color:var(--accent);animation:blink 1s step-end infinite;font-weight:300;margin-left:2px}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.hero-sub{font-size:15px;color:var(--dim);margin-bottom:32px;font-weight:400;animation:fu .7s .28s both;letter-spacing:.01em}
+.hero-domains{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:44px;animation:fu .7s .36s both}
+.hero-domain{font-size:11px;font-family:var(--mono);color:var(--muted);border:1px solid var(--border2);padding:6px 14px;letter-spacing:.06em;text-transform:uppercase;transition:border-color .2s,color .2s}
+.hero-domain:hover{border-color:var(--accent);color:var(--accent)}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:64px;animation:fu .7s .44s both}
+.btn-fill{display:inline-block;background:var(--accent);color:#0A0A0A;padding:13px 28px;font-size:13px;font-weight:600;border-radius:0;transition:opacity .2s;letter-spacing:.02em;font-family:var(--sans)}
+.btn-fill:hover{opacity:.88}
+.btn-out{display:inline-block;background:transparent;color:var(--muted);padding:13px 28px;font-size:13px;font-weight:400;border:1px solid var(--border2);border-radius:0;transition:border-color .2s,color .2s;font-family:var(--sans)}
+.btn-out:hover{border-color:var(--muted);color:var(--text)}
+.hero-grid{display:grid;grid-template-columns:65fr 35fr;gap:48px;align-items:center}
+.hero-right{display:flex;align-items:stretch}
+.hero-stats{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--border);animation:fu .7s .48s both;width:100%}
+.stat{padding:20px 22px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);transition:background .2s}
+.stat:nth-child(2){border-right:none}
+.stat:nth-child(3),.stat:nth-child(4){border-bottom:none}
+.stat:nth-child(4){border-right:none}
+.stat:hover{background:var(--surface)}
+.stat-n{font-family:var(--mono);font-size:28px;color:var(--accent);line-height:1;margin-bottom:7px;letter-spacing:-.01em}
+.stat-l{font-size:11px;color:var(--dim);line-height:1.5;letter-spacing:.01em}
+@keyframes fu{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+/* ── ABOUT ── */
+#about{padding:110px 0;border-top:1px solid var(--border)}
+.sec-in{max-width:var(--max);margin:0 auto;padding:0 32px}
+.sec-h{font-family:var(--display);font-weight:800;font-size:44px;color:var(--text);margin-bottom:44px;opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;letter-spacing:-.02em}
+.sec-h.vis{opacity:1;transform:none}
+.about-grid{display:grid;grid-template-columns:58fr 42fr;gap:72px}
+.about-text p{font-size:16px;color:var(--muted);line-height:1.85;margin-bottom:22px;font-weight:400}
+.about-text p:last-child{margin-bottom:0}
+.about-text strong{color:var(--text);font-weight:500}
+.hiw-card{background:var(--surface);border:1px solid var(--border);padding:28px;height:fit-content}
+.hiw-lbl{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.12em;margin-bottom:24px;font-weight:500;font-family:var(--mono)}
+.hiw-list{display:flex;flex-direction:column;gap:22px}
+.hiw-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:5px;letter-spacing:-.01em}
+.hiw-desc{font-size:13px;color:var(--muted);line-height:1.7}
+
+/* ── WORK ── */
+#work{padding:110px 0;border-top:1px solid var(--border)}
+.work-sub{font-size:15px;color:var(--dim);margin-top:6px;margin-bottom:32px;font-weight:400;letter-spacing:.01em}
+.filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:28px}
+.fchip{background:transparent;border:1px solid var(--border);padding:7px 16px;font-size:11px;font-family:var(--mono);color:var(--dim);letter-spacing:.04em;text-transform:uppercase;transition:border-color .2s,color .2s,background .2s}
+.fchip:hover{border-color:var(--border2);color:var(--muted)}
+.fchip.act{border-color:var(--accent);color:var(--accent);background:var(--accent-dim)}
+.work-layout{display:grid;grid-template-columns:268px 1fr;border:1px solid var(--border);overflow:hidden;height:700px}
+.work-sb{overflow-y:auto;height:100%;border-right:1px solid var(--border);scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
+.work-sb::-webkit-scrollbar{width:2px}
+.work-sb::-webkit-scrollbar-thumb{background:var(--border2)}
+.sb-item{padding:15px 18px;border-left:2px solid transparent;border-bottom:1px solid var(--border);transition:background .15s,border-color .15s}
+.sb-item:last-child{border-bottom:none}
+.sb-item:hover{background:var(--surface)}
+.sb-item.act{border-left-color:var(--accent);background:var(--surface)}
+.sb-title{font-size:13px;font-weight:500;color:var(--text);margin-bottom:4px;line-height:1.35;letter-spacing:-.01em}
+.sb-sub{font-size:11px;color:var(--dim);line-height:1.4;letter-spacing:.01em}
+.sb-cat{display:inline-block;font-size:9px;font-family:var(--mono);color:var(--dim);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.work-ct{overflow-y:auto;height:100%;padding:32px 36px;scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
+.work-ct::-webkit-scrollbar{width:2px}
+.work-ct::-webkit-scrollbar-thumb{background:var(--border2)}
+
+.cs-co{font-size:10px;text-transform:uppercase;color:var(--dim);letter-spacing:.1em;margin-bottom:10px;font-family:var(--mono)}
+.cs-badges{display:flex;gap:8px;margin-bottom:12px}
+.cs-badge{padding:3px 10px;font-size:10px;font-weight:500;font-family:var(--mono);letter-spacing:.04em}
+.cs-badge.killed{background:rgba(255,80,80,0.1);color:#ff6060;border:1px solid rgba(255,80,80,0.2)}
+.cs-badge.indev{background:rgba(255,184,0,0.1);color:#FFB800;border:1px solid rgba(255,184,0,0.2)}
+.cs-title{font-family:var(--display);font-weight:700;font-size:24px;color:var(--text);margin-bottom:14px;line-height:1.2;letter-spacing:-.02em}
+.cs-hook{font-size:16px;color:#b0b0b0;border-left:2px solid var(--accent);padding-left:18px;margin-bottom:24px;line-height:1.78;font-weight:400}
+.cs-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:24px}
+.cs-tag{background:transparent;border:1px solid var(--border2);padding:3px 10px;font-size:10px;color:var(--dim);font-family:var(--mono);letter-spacing:.04em;text-transform:uppercase;transition:color .15s,border-color .15s}
+.cs-tag:hover{color:var(--muted);border-color:var(--border2)}.cs-div{border:none;border-top:1px solid var(--border);margin:24px 0}
+.cs-lbl{font-size:10px;text-transform:uppercase;color:var(--dim);letter-spacing:.12em;margin-bottom:12px;font-family:var(--mono)}
+.cs-body{font-size:15px;color:var(--muted);line-height:1.82;font-weight:400}
+.cs-did{display:flex;flex-direction:column;gap:18px}
+.cs-did li{font-size:15px;color:var(--text);line-height:1.75;padding-left:20px;position:relative;font-weight:400}
+.cs-did li::before{content:'—';position:absolute;left:0;color:var(--dim);font-family:var(--mono)}
+.pm-box{background:var(--surface);border:1px solid var(--border);border-left:2px solid var(--accent);padding:22px 22px 22px 20px;margin:28px 0}
+.pm-q{font-family:var(--serif);font-style:italic;font-size:15px;color:#b8b8b8;line-height:1.82}
+.pm-lbl{font-size:10px;text-transform:uppercase;color:var(--dim);letter-spacing:.12em;margin-bottom:10px;font-family:var(--mono)}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-top:12px}
+.m-card{background:var(--surface);border:1px solid var(--border);padding:14px 16px;transition:background .15s}
+.m-card:hover{background:var(--surface2)}
+.m-n{font-family:var(--mono);font-size:19px;color:var(--accent);margin-bottom:5px;line-height:1.1;letter-spacing:-.01em}
+.m-l{font-size:11px;color:var(--dim);line-height:1.45;letter-spacing:.01em}
+
+/* ── SKILLS ── */
+#skills{padding:110px 0;border-top:1px solid var(--border)}
+.skills-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-top:8px}
+.sk-col{background:var(--bg);padding:28px 24px}
+.sk-h{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.12em;font-weight:500;margin-bottom:18px;font-family:var(--mono)}
+.sk-tags{display:flex;flex-wrap:wrap;gap:5px}
+.sk-tag{background:var(--surface);border:1px solid var(--border);padding:5px 10px;font-size:12px;color:var(--muted);letter-spacing:.01em;transition:border-color .2s,color .2s}
+.sk-tag:hover{border-color:var(--border2);color:var(--text)}
+
+/* ── TIMELINE ── */
+#timeline{padding:110px 0;border-top:1px solid var(--border)}
+.tl-wrap{position:relative;padding-top:36px;margin-top:52px}
+.tl-line{position:absolute;top:0;left:0;right:0;height:1px;background:var(--border)}
+.tl-track{display:flex}
+.tl-item{flex:1;padding-top:32px;padding-right:40px;position:relative}
+.tl-item:last-child{padding-right:0}
+.tl-dot{position:absolute;top:-5px;left:0;width:9px;height:9px;border-radius:50%;background:var(--accent)}
+.tl-date{font-family:var(--mono);font-size:10px;color:var(--dim);margin-bottom:10px;letter-spacing:.04em}
+.tl-co{font-family:var(--display);font-weight:700;font-size:17px;color:var(--text);margin-bottom:3px;letter-spacing:-.01em}
+.tl-role{font-size:13px;color:var(--dim);margin-bottom:16px;letter-spacing:.01em}
+.tl-facts{display:flex;flex-direction:column;gap:5px}
+.tl-fact{font-size:11px;color:var(--dim);font-family:var(--mono);letter-spacing:.02em}
+
+/* ── CONTACT ── */
+#contact{background:var(--surface);border-top:1px solid var(--border);padding:120px 0}
+.contact-h{font-family:var(--display);font-weight:800;font-size:54px;color:var(--text);line-height:1.0;letter-spacing:-.03em}
+.contact-sub-accent{color:var(--accent)}
+.contact-s{font-size:17px;color:var(--muted);margin-top:18px;max-width:540px;line-height:1.72;font-weight:400}
+.contact-btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:44px}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--border);padding:24px 32px}
+.foot-in{max-width:var(--max);margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+footer p{font-size:12px;color:var(--dim);font-family:var(--mono);letter-spacing:.02em}
+
+/* ── FADE-UP TARGET ── */
+.fu{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.fu.vis{opacity:1;transform:none}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr}
+  .hero-name{font-size:64px}
+  .hero-tag{font-size:22px}
+  .skills-grid{grid-template-columns:repeat(2,1fr)}
+  .about-grid{grid-template-columns:1fr;gap:48px}
+  .feat-grid{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  .nav-links,.nav-avail{display:none}
+  .hbg{display:flex}
+  nav,#mnav{padding-left:20px;padding-right:20px}
+  .hero-in,.sec-in{padding-left:20px;padding-right:20px}
+  .hero-name{font-size:52px;letter-spacing:-.02em}
+  .hero-tag{font-size:19px}
+  .hero-grid{grid-template-columns:1fr}
+  .contact-h{font-size:38px}
+  .work-layout{display:flex;flex-direction:column;height:auto}
+  .work-sb{display:flex;overflow-x:auto;overflow-y:hidden;height:auto;border-right:none;border-bottom:1px solid var(--border)}
+  .sb-item{flex-shrink:0;border-left:none!important;border-right:1px solid var(--border);border-bottom:none;padding:10px 14px;min-width:140px}
+  .sb-item:last-child{border-right:none}
+  .sb-item.act{border-left:none!important;border-bottom:2px solid var(--accent)!important}
+  .sb-sub,.sb-cat{display:none}
+  .work-ct{height:auto;max-height:none;padding:24px 20px}
+  .skills-grid{grid-template-columns:1fr 1fr;gap:1px}
+  .tl-track{flex-direction:column;gap:36px;border-left:1px solid var(--border);padding-left:28px}
+  .tl-line{display:none}
+  .tl-wrap{padding-top:0;margin-top:36px}
+  .tl-item{padding-top:0;padding-right:0}
+  .tl-dot{left:-34px;top:2px}
+  .contact-h{font-size:38px}
+  .contact-s{font-size:15px}
+  .sec-h{font-size:36px;letter-spacing:-.02em}
+}
+@media(max-width:480px){
+  .hero-name{font-size:42px}
+  .hero-tag{font-size:17px}
+  .hero-stats{grid-template-columns:1fr 1fr}
+  .skills-grid{grid-template-columns:1fr}
+  .hero-domains{gap:6px}
+  .feat-grid{grid-template-columns:1fr}
+  .pq-text{font-size:20px}
+}
+
+/* ── MARQUEE ── */
+.marquee-wrap{border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--surface);padding:14px 0;overflow:hidden}
+.marquee-track{display:inline-block;white-space:nowrap;font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:.06em;text-transform:uppercase;animation:marquee 28s linear infinite}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── FEATURED CASES ── */
+#featured{padding:80px 0;background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.feat-label{font-family:var(--mono);font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.12em;margin-bottom:16px;display:block}
+.feat-h{font-family:var(--display);font-weight:800;font-size:36px;color:var(--text);margin-bottom:40px;letter-spacing:-.02em}
+.feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)}
+.feat-card{background:var(--bg);padding:36px 32px;transition:background .2s;cursor:pointer}
+.feat-card:hover{background:var(--surface2)}
+.feat-cat{font-family:var(--mono);font-size:9px;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px;display:block}
+.feat-num{font-family:var(--mono);font-size:40px;color:var(--accent);line-height:1;margin-bottom:4px;letter-spacing:-.02em}
+.feat-numl{font-size:12px;color:var(--dim);margin-bottom:16px}
+.feat-title{font-family:var(--display);font-weight:700;font-size:20px;color:var(--text);margin-bottom:8px;letter-spacing:-.01em}
+.feat-line{font-size:14px;color:var(--muted);margin-bottom:20px;line-height:1.6}
+.feat-cta{font-family:var(--mono);font-size:12px;color:var(--dim);transition:color .2s;background:none;border:none;padding:0;font-family:var(--mono);letter-spacing:.02em}
+.feat-cta:hover{color:var(--accent)}
+
+/* ── PULL QUOTE ── */
+#pullquote{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:64px 0;text-align:center}
+.pq-inner{max-width:var(--max);margin:0 auto;padding:0 32px}
+.pq-text{font-family:var(--serif);font-style:italic;font-size:28px;color:var(--muted);max-width:760px;margin:0 auto;line-height:1.6}
+.pq-attr{font-family:var(--mono);font-size:12px;color:var(--dim);margin-top:20px}
+
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="prog"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-in">
+    <a href="#hero" class="nav-logo">DN</a>
+    <div class="nav-links">
+      <a href="#work" data-s="work">Work</a>
+      <a href="#about" data-s="about">About</a>
+      <a href="#skills" data-s="skills">Skills</a>
+      <a href="#contact" data-s="contact">Contact</a>
+    </div>
+    <div class="nav-right">
+      <div class="nav-avail"><span class="avail-dot"></span><span>Available</span></div>
+      <button class="hbg" id="hbg" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div id="mnav">
+  <a href="#work">Work</a>
+  <a href="#about">About</a>
+  <a href="#skills">Skills</a>
+  <a href="#timeline">Career</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-in">
+    <div class="hero-grid">
+      <div class="hero-left">
+        <p class="hero-eyebrow">Product Manager</p>
+        <h1 class="hero-name">Divya Nautiyal</h1>
+        <p class="hero-tag">I ship products. I kill bad ideas. I do both on purpose.<span class="cursor-b">|</span></p>
+        <div class="hero-domains">
+          <span class="hero-domain" onclick="navigateToFilter('erp')" style="cursor:pointer" title="See Internal Systems & AI work">Enterprise Platforms</span>
+          <span class="hero-domain" onclick="navigateToFilter('ai')" style="cursor:pointer" title="See AI Products">AI Systems</span>
+          <span class="hero-domain" onclick="navigateToFilter('consumer')" style="cursor:pointer" title="See Client Platform work">Revenue Products</span>
+          <span class="hero-domain" onclick="navigateToFilter('consumer')" style="cursor:pointer" title="See Logistics work">Logistics Tech</span>
+          <span class="hero-domain" onclick="navigateToFilter('pp')" style="cursor:pointer" title="See EdTech work">EdTech</span>
+        </div>
+        <div class="hero-btns">
+          <a href="#work" class="btn-fill">See my work</a>
+          <a href="https://drive.google.com/file/d/1ntxUMwDa2M03y8fZblZYgtnUfsFdT-Pm/view?usp=sharing" target="_blank" rel="noopener" class="btn-out">Resume</a>
+          <a href="https://drive.google.com/drive/folders/1VOwKu5MmkdeBvjbcI_S1Grraso63O4fe?usp=drive_link" target="_blank" rel="noopener" class="btn-out">Proof of Work</a>
+          <a href="mailto:divyanautiyal1@gmail.com" class="btn-out">Email</a>
+          <a href="https://www.linkedin.com/in/divya-nautiyal/" target="_blank" rel="noopener" class="btn-out">LinkedIn</a>
+          <a href="tel:+918126390521" class="btn-out">+91 81263 90521</a>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="hero-stats">
+          <div class="stat"><div class="stat-n" id="s1">₹0 Cr</div><div class="stat-l">ARR at current company</div></div>
+          <div class="stat"><div class="stat-n" id="s2">0</div><div class="stat-l">products. Full ownership.</div></div>
+          <div class="stat"><div class="stat-n" id="s3">0+</div><div class="stat-l">years owning the full product function</div></div>
+          <div class="stat"><div class="stat-n" id="s4">0</div><div class="stat-l">product killed on recommendation</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">Enterprise Platforms · AI Product · Revenue Systems · Logistics Tech · EdTech · 0→1 Builds · Founder-Level Influence · &nbsp;&nbsp;&nbsp;Enterprise Platforms · AI Product · Revenue Systems · Logistics Tech · EdTech · 0→1 Builds · Founder-Level Influence · &nbsp;&nbsp;&nbsp;Enterprise Platforms · AI Product · Revenue Systems · Logistics Tech · EdTech · 0→1 Builds · Founder-Level Influence · &nbsp;&nbsp;&nbsp;Enterprise Platforms · AI Product · Revenue Systems · Logistics Tech · EdTech · 0→1 Builds · Founder-Level Influence ·</div>
+</div>
+
+<!-- WORK -->
+<section id="work">
+  <div class="sec-in">
+    <h2 class="sec-h">Work</h2>
+    <p class="work-sub">26 case studies. Every one worth reading.</p>
+    <div class="filter-row" id="frow"></div>
+    <div class="work-layout">
+      <div class="work-sb" id="wsb"></div>
+      <div class="work-ct" id="wct"></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED WORK -->
+<section id="featured">
+  <div class="sec-in">
+    <span class="feat-label">Featured Cases</span>
+    <h2 class="feat-h fu">Four cases that show how I think.</h2>
+    <div class="feat-grid fu">
+      <div class="feat-card" onclick="openCase('elevate')">
+        <span class="feat-cat">Client Platform</span>
+        <div class="feat-num">₹14L+</div>
+        <div class="feat-numl">MRR in 60 days</div>
+        <div class="feat-title">Bigship Elevate</div>
+        <div class="feat-line">Monetised an informal service layer into a 3-tier subscription product.</div>
+        <button class="feat-cta" onclick="openCase('elevate')">→ Read case study</button>
+      </div>
+      <div class="feat-card" onclick="openCase('aiprototypes')">
+        <span class="feat-cat">AI Systems</span>
+        <div class="feat-num">10 Cr</div>
+        <div class="feat-numl">shipment records powering the model</div>
+        <div class="feat-title">AI Courier Intelligence</div>
+        <div class="feat-line">Mapped ML model outputs to 8 seller workflows. Built for trust, not just accuracy.</div>
+        <button class="feat-cta" onclick="openCase('aiprototypes')">→ Read case study</button>
+      </div>
+      <div class="feat-card" onclick="openCase('disposition')">
+        <span class="feat-cat">Internal Systems</span>
+        <div class="feat-num">43%→91%</div>
+        <div class="feat-numl">capture rate in 3 weeks</div>
+        <div class="feat-title">Disposition Capture Redesign</div>
+        <div class="feat-line">Founder said accountability. I said friction. One of us was right.</div>
+        <button class="feat-cta" onclick="openCase('disposition')">→ Read case study</button>
+      </div>
+      <div class="feat-card" onclick="openCase('cohortdiscovery')">
+        <span class="feat-cat">Strategic Pivot</span>
+        <div class="feat-num">~90%</div>
+        <div class="feat-numl">B2C revenue from repositioned segment</div>
+        <div class="feat-title">Cohort Discovery — ICP Pivot</div>
+        <div class="feat-line">The data said the founding audience was wrong. I said it to the founders.</div>
+        <button class="feat-cta" onclick="openCase('cohortdiscovery')">→ Read case study</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="sec-in">
+    <h2 class="sec-h">About</h2>
+    <div class="about-grid fu">
+      <div class="about-text">
+        <p>At Bigship, a ₹100 Cr ARR logistics platform, I've been the sole owner of the entire product function — a 90K+ seller-facing platform spanning domestic, hyperlocal, and international shipping, and a 300-user operational ERP across 3 branches. That's not one product. It's an enterprise platform ecosystem: financial workflows, AI pipelines, lifecycle architecture, carrier integrations, and internal governance tooling — all built and shipped without a product team around me.</p>
+        <p>Before that, at Programming Pathshala, I owned the product function for an EdTech SaaS — built a B2B assessment platform and white-labeled LMS from zero (15+ university campuses, ₹24L+ ARR), discovered that the founding ICP was inverted through cohort analysis and repositioned the entire product around it, and ran a Fellowship Program that generated ₹1.5 Cr+ in its first quarter. Each was a different kind of problem. The thread was the same: figure out what's actually wrong, build something with real edges, ship it.</p>
+        <p>The problems I'm drawn to sit at the edge of product and systems — where a workflow is breaking because the data taxonomy is wrong, where AI is being shipped as a feature instead of designed as infrastructure, where a revenue model is trapped inside an ad hoc process that nobody has productised yet. I find those constraints and I build through them.</p>
+        <p>I started in teaching — 200+ sessions a month, learners from 5 to 60, every learning style and neurotype. That's where I learned to read a person faster than a research report can. The user instinct I use every day was built in a room, not a tool.</p>
+      </div>
+      <div>
+        <div class="hiw-card">
+          <div class="hiw-lbl">HOW I WORK</div>
+          <div class="hiw-list">
+            <div>
+              <div class="hiw-title">Design for the constraint beneath the constraint.</div>
+              <div class="hiw-desc">The first problem statement is rarely the right one. The data taxonomy is broken. The AI is a feature, not infrastructure. The workflow exists because nobody productised the exception. I build to that layer.</div>
+            </div>
+            <div>
+              <div class="hiw-title">Redirect with evidence, not opinion.</div>
+              <div class="hiw-desc">Five founder decisions redirected — each one won by framing in their currency, not mine. Data, commercial case, timeline. Not preference.</div>
+            </div>
+            <div>
+              <div class="hiw-title">Shipping is where reality begins.</div>
+              <div class="hiw-desc">Adoption is part of the spec. A product that shipped but isn't used hasn't shipped. I own the full arc — discovery through scaled execution.</div>
+            </div>
+            <div>
+              <div class="hiw-title">Know when to stop.</div>
+              <div class="hiw-desc">I built Phil. Ran structured research. Found weak PMF. Recommended discontinuation. That call is worth more than the build — and harder to make.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PULL QUOTE -->
+<section id="pullquote">
+  <div class="pq-inner">
+    <p class="pq-text fu">"Long enough in product to know that shipping is never the finish — it's where reality begins. The real work is what survives after: reduced friction, sensible details, and earned trust."</p>
+    <p class="pq-attr fu">— Divya Nautiyal</p>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="sec-in">
+    <h2 class="sec-h">Skills</h2>
+    <div class="skills-grid fu">
+      <div class="sk-col">
+        <div class="sk-h">Product &amp; Strategy</div>
+        <div class="sk-tags">
+          <span class="sk-tag">Product Strategy</span><span class="sk-tag">Product Vision</span><span class="sk-tag">Roadmap Planning</span><span class="sk-tag">PRD Writing</span><span class="sk-tag">User Stories</span><span class="sk-tag">Backlog Management</span><span class="sk-tag">Sprint Planning</span><span class="sk-tag">UAT</span><span class="sk-tag">Go-to-Market Strategy</span><span class="sk-tag">A/B Testing</span><span class="sk-tag">Phased Rollout</span><span class="sk-tag">Hypothesis Validation</span><span class="sk-tag">0→1 Product Development</span><span class="sk-tag">Feature Scoping</span><span class="sk-tag">MVP Design</span>
+        </div>
+      </div>
+      <div class="sk-col">
+        <div class="sk-h">AI &amp; Data</div>
+        <div class="sk-tags">
+          <span class="sk-tag">LLM Prompt Architecture</span><span class="sk-tag">AI Product Development</span><span class="sk-tag">AI Prototyping</span><span class="sk-tag">Sentiment Classification</span><span class="sk-tag">Data Labelling</span><span class="sk-tag">SQL</span><span class="sk-tag">Mixpanel</span><span class="sk-tag">Google Analytics</span><span class="sk-tag">Cohort Analysis</span><span class="sk-tag">Funnel Analysis</span><span class="sk-tag">Dashboard Design</span><span class="sk-tag">Figma</span><span class="sk-tag">Excalidraw</span><span class="sk-tag">Clarity</span><span class="sk-tag">Voicebot Design</span><span class="sk-tag">IVR Systems</span><span class="sk-tag">DPO Alignment</span><span class="sk-tag">STT/TTS Product Design</span><span class="sk-tag">Conversation Intelligence</span>
+        </div>
+      </div>
+      <div class="sk-col">
+        <div class="sk-h">Commercial &amp; Growth</div>
+        <div class="sk-tags">
+          <span class="sk-tag">Subscription Model Design</span><span class="sk-tag">VAS Design</span><span class="sk-tag">Revenue Assurance</span><span class="sk-tag">Funnel Optimisation</span><span class="sk-tag">Referral System Design</span><span class="sk-tag">CAC Reduction</span><span class="sk-tag">LTV Improvement</span><span class="sk-tag">Pricing Strategy</span><span class="sk-tag">Activation Flow Design</span><span class="sk-tag">Growth Loops</span><span class="sk-tag">Product-Led Growth</span><span class="sk-tag">Conversion Rate Optimisation</span><span class="sk-tag">Working Capital Products</span><span class="sk-tag">COD Advance Design</span><span class="sk-tag">Eligibility Engine Design</span>
+        </div>
+      </div>
+      <div class="sk-col">
+        <div class="sk-h">Leadership &amp; Stakeholders</div>
+        <div class="sk-tags">
+          <span class="sk-tag">Founder Management</span><span class="sk-tag">Stakeholder Alignment</span><span class="sk-tag">Vendor Management</span><span class="sk-tag">Cross-Functional Leadership</span><span class="sk-tag">Investor Communication</span><span class="sk-tag">Mentoring</span><span class="sk-tag">Change Management</span><span class="sk-tag">Enterprise GTM</span><span class="sk-tag">Team Building</span><span class="sk-tag">API Integration Ownership</span><span class="sk-tag">RBAC/LPAC Architecture</span><span class="sk-tag">Webhook Design</span><span class="sk-tag">Push API</span><span class="sk-tag">Judge0 / Code Evaluation</span><span class="sk-tag">SIP/VoIP Product Design</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section id="timeline">
+  <div class="sec-in">
+    <h2 class="sec-h">Career</h2>
+    <div class="tl-wrap fu">
+      <div class="tl-line"></div>
+      <div class="tl-track">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-date">Aug 2025 — Present</div>
+          <div class="tl-co">Bigship</div>
+          <div class="tl-role">Product Manager</div>
+          <div class="tl-facts"><span class="tl-fact">₹100 Cr ARR</span><span class="tl-fact">30 products</span><span class="tl-fact">Full product function</span><span class="tl-fact">Client platform + AI &amp; ops infra</span></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="background:var(--muted)"></div>
+          <div class="tl-date">Mar 2024 — Jul 2025</div>
+          <div class="tl-co">Programming Pathshala</div>
+          <div class="tl-role">Associate Product Manager</div>
+          <div class="tl-facts"><span class="tl-fact">₹24L+ ARR</span><span class="tl-fact">15+ campuses</span><span class="tl-fact">Full product function</span></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="background:var(--muted)"></div>
+          <div class="tl-date">Jan 2023 — Feb 2024</div>
+          <div class="tl-co">JetLearn</div>
+          <div class="tl-role">STEM Teacher Mentor</div>
+          <div class="tl-facts"><span class="tl-fact">15 direct reports</span><span class="tl-fact">~40% ramp-up reduction</span><span class="tl-fact">~28% demo CVR</span></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="background:var(--muted)"></div>
+          <div class="tl-date">Jun 2020 — Dec 2022</div>
+          <div class="tl-co">WhiteHat Jr</div>
+          <div class="tl-role">Coding Instructor</div>
+          <div class="tl-facts"><span class="tl-fact">150+ students</span><span class="tl-fact">95%+ CSAT</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="sec-in">
+    <h2 class="contact-h fu">Let's build<br><span class="contact-sub-accent">something.</span></h2>
+    <p class="contact-s fu">Looking for roles with real complexity — enterprise platforms, AI product, revenue systems. I bring a playbook, a track record, and the judgment to know when to stop. If that's what you're building, let's talk.</p>
+    <div class="contact-btns fu">
+      <a href="mailto:divyanautiyal1@gmail.com" class="btn-out">Email me</a>
+      <a href="https://www.linkedin.com/in/divya-nautiyal/" target="_blank" rel="noopener" class="btn-out">LinkedIn</a>
+      <a href="https://drive.google.com/file/d/1ntxUMwDa2M03y8fZblZYgtnUfsFdT-Pm/view?usp=sharing" target="_blank" rel="noopener" class="btn-fill">Download Resume</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-in">
+    <p>Divya Nautiyal © 2026</p>
+    <p>Enterprise Platform &amp; AI Product</p>
+  </div>
+</footer>
+
+<script>
+const cases=[
+{id:'elevate',cat:'consumer',title:'Bigship Elevate',short:'Concierge subscription tier',company:'Bigship · Consumer Panel · PM · 2025–26',tags:['Subscription Tier','B2C Product Strategy','VAS','Stakeholder Pushback','Revenue Model'],ktags:['Subscription Model','Value-Added Services','Pricing & Packaging','Stakeholder Alignment'],hook:"High-value sellers were churning without a product reason to stay. Premium service was already happening informally — manual exceptions, relationship-based overrides — but it was ad hoc — sometimes charged, sometimes not — unstructured, and invisible to revenue. I designed the product layer that made it real.",problem:"Bigship had no recurring B2C revenue from sellers. Across 90K+ onboarded accounts, 8–10K who engaged monthly received an identical product experience regardless of their operational scale or dependency on logistics. High-recharge sellers with 1L+ monthly recharge — roughly 300–500 accounts managed by KAMs — were already receiving faster escalations, manual overrides, and exception handling informally — sometimes free, sometimes charged ad hoc — but never structured, never consistent, and never contributing to recurring revenue. The business had three compounding problems: revenue leakage from unmonetised service value, operational ambiguity from unstructured exception-making, and retention risk from high-dependency sellers who expected speed but had no formal entitlement to it.",did:['Identified the unpriced service layer already embedded in operations — informal exceptions, faster escalations, KAM overrides — and made the case to convert it into a tiered, monetisable product with structured entitlements and SLA-based routing.','Designed a three-tier subscription — Economy, Business, Enterprise — aligned to seller maturity bands. Feature selection came directly from escalation ticket issue type volumes: the highest-frequency, highest-urgency support requests became the entitlements. NPR/NDR follow-ups, shipment updates, COD changes, overweight priority, early COD, faster claims — all derived from ticket data, not assumption.','Wrote the full PRD and scoped the Razorpay subscription flow, kept deliberately separate from the wallet to protect the billing clarity of the core shipment product. Designed seller-facing activation: a dashboard banner showing the entry-level plan with an Explore Plans CTA.','When the founder proposed an ERP-based soft-launch, I flagged a structural blocker: the ERP operated in read-only mode for sellers. A subscription requiring discovery, selection, and activation cannot live where the user cannot act. Redirected to a full hard-launch on the seller panel — this changed the entire product legitimacy of the launch.','Designed the internal operational layer: admin-level agent pool configuration, tier-based escalation routing, dedicated ownership per tier, location-level assignment logic. Aligned CS, who initially resisted because their ownership scope was being expanded. Launched concept-to-go-live in two weeks with scoped incremental delivery.'],moment:"The sharpest decision was the ERP redirect. Technically, the routing infrastructure sat in the ERP and an internal configuration felt like a faster win. But a subscription product that sellers can't discover, understand, or purchase isn't a product — it's an internal workaround. I ran a quick user journey audit, showed the read-only constraint, and framed it as a product legitimacy question: soft-launching on a surface sellers can't act on means we're not actually launching. We changed the plan. The product shipped on the right surface. That call took the product from an internal service note to an actual recurring revenue stream.",metrics:[{n:'₹14L+',l:'MRR within 60 days'},{n:'~22%',l:'Top-seller churn reduction'},{n:'2 weeks',l:'Concept to go-live'},{n:'3 tiers',l:'Economy / Business / Enterprise'}],links:['Live seller panel screenshot','Loom walkthrough (2 min)','Investor presentation slide']},
+{id:'aiprototypes',cat:'consumer',title:'AI Courier Intelligence',short:'Decision-support intelligence layer across 8 seller workflows',company:'Bigship · Consumer Panel · PM · 2025–26',tags:['AI Product','Prediction UX','Trust Design','Workflow Intelligence','Investor Demo'],ktags:['AI Product Development','Prompt Architecture','Model Selection','North Star Metric'],hook:'Sellers were choosing couriers by price, habit, or guesswork. Bigship had 4–5 years of shipment history — 10 crore records — and one AI engineer. The question was not whether to build AI. It was how to make it trustworthy enough for sellers to actually use it.',problem:'Courier selection was the highest-impact, highest-frequency decision sellers made — and they were making it blind. No visibility into pincode-level performance, pickup reliability, delivery TAT accuracy, or historical success rates per route. At the same time, Bigship had years of shipment data that could answer every one of those questions. The gap between available intelligence and visible intelligence was the entire product opportunity.',did:['Mapped all seller-panel touchpoints where courier selection or assignment decisions happened: rate calculator, courier ranking, courier priority settings, unshipped order assignment, NDR reattempt decisioning, bulk order assignment, cutoff alerts, and risk flagging. Identified 8 workflows where embedding predictions would improve decision quality — and rejected the idea of a separate AI dashboard because adoption happens at the decision moment, not away from it.','Worked with the AI engineer to translate raw model JSON outputs into seller-facing intelligence. The model returned structured predictions per courier: overall score, delivery success probability, predicted pickup ETA in hours, predicted delivery days, cutoff time, TAT, and warnings. My job was to convert that into plain-language seller guidance: Cheapest option, Most reliable, Fastest delivery, Balanced choice — with visible reasoning so sellers understood why, not just what.','Designed the UX around three principles: progressive disclosure (surface the recommendation first, let sellers inspect the reasoning on demand), explainability (break recommendations into visible factors rather than a single opaque score), and human override (AI as decision support, never enforcement — sellers retained full control).','Flagged a credibility risk before launch: deploying predictions without a trust baseline meant early errors would damage adoption permanently. Proposed logging predicted TAT vs actual TAT pre-launch to build a deviation baseline. Led rollout sequencing to show positive-deviation cases first — routes where the model was consistently right — before exposing sellers to uncertainty-heavy predictions.','Built seller-level tracking of whether AI recommendations were accepted or overridden. The model was trained on historical data using unsupervised learning — stronger accuracy on high-volume routes, variable on sparse ones. This was acknowledged transparently in the product design rather than hidden.'],moment:"The positive-deviation-first rollout was the most important product call I made on this. My instinct was: if the first few AI recommendations sellers see are wrong, the entire product is dead. Trust, once broken by a prediction system, is almost impossible to rebuild. So before launch I proposed logging predicted TAT against actual outcomes to understand where the model was most reliable, and sequencing the rollout to show those routes first. The AI engineer thought it was unnecessary overhead. I held the position — not because I distrusted the model, but because I understood that seller trust is the actual metric we were optimizing for, not model accuracy in isolation.",metrics:[{n:'8',l:'Seller workflows with embedded AI intelligence'},{n:'10 Cr',l:'Shipment records powering the model'},{n:'Investor-ready',l:'Prototype demoed at IIT Delhi partner event'},{n:'Planned',l:'Directional — full rollout pending trust baseline'}],links:['Figma prototype (view only)','AI roadmap slide','Architecture diagram'],ai:true},
+{id:'notify',cat:'consumer',title:'Bigship Notify',short:'WhatsApp proactive buyer communication',company:'Bigship · Consumer Panel · PM · 2025–26',tags:['Buyer Experience','WhatsApp Integration','RTO Prevention','Notification Design'],ktags:['Proactive Communication','Last-Mile Delivery','Carrier Integration'],hook:"Buyers had no proactive visibility into their shipment. Every delivery exception became a call to the seller, who called Bigship, who called the courier. The seller absorbed all reputational damage for a logistics failure they didn't cause. I built the communication layer that broke that chain — and monetised it.",problem:"Shipment visibility was entirely reactive. Buyers received no proactive updates at pickup, in-transit, out-for-delivery, or failure stages. This created cascading coordination loops: buyer calls seller, seller calls Bigship support, Bigship calls courier. The seller bore the trust cost of courier failures. WISMO tickets were high, RTO rates were climbing, and support bandwidth was consumed by status queries that a well-timed message could have pre-empted entirely.",did:['Mapped the end-to-end buyer communication journey and identified the root cause as absence of proactive state visibility — not messaging infrastructure. Buyers escalated because the system gave them nothing until they demanded it.','Designed Bigship Notify as a productised communication layer, not a utility feature: a freemium model with email communication included by default and WhatsApp-based proactive updates as a paid tier at ₹0.90 per status trigger. This gave sellers a clear unit economics case — one prevented NDR pays for more than five messages.','Built seller-configurable lifecycle triggers: sellers choose which shipment states fire buyer updates (pickup, in-transit, out-for-delivery, delivered, failed, reattempt). Designed for communication relevance and seller cost control, not just coverage.','Led vendor evaluation, selected Interakt as WhatsApp delivery infrastructure, wrote the API integration spec, and managed the third-party integration end-to-end. Designed seller-facing configuration inside Bigship.direct: enable per shipment or in bulk, preview templates, track send status.','Defined success metrics before launch: delivery-status support ticket volume, RTO rate, and seller NPS. Instrumented tracking at launch rather than after.'],moment:"The pricing model was a product decision, not a finance decision. At ₹0.90 per message, I built the unit economics directly into the seller-facing onboarding screen: one proactive message preventing one NDR return pays for itself five times over. Sellers who saw that calculation adopted immediately. Sellers who didn't see it needed to be shown it. I made sure the onboarding surface made the math visible. That framing is why adoption was fast — not the feature itself.",metrics:[{n:'~60%',l:'Delivery-status support tickets reduced'},{n:'~18%',l:'RTO rate improvement'},{n:'₹0.90',l:'Per message — self-evident unit economics'},{n:'Freemium',l:'Email default, WhatsApp paid'}],links:['Seller config screen screenshot','WhatsApp notification flow','NDR metric snapshot']},
+{id:'flashpay',cat:'consumer',title:'Bigship FlashPay',short:'Early COD advance — fintech product inside a logistics platform',company:'Bigship · Consumer Panel · PM · 2025–26',tags:['Fintech Product','COD Advance','Working Capital','Seller Liquidity','0→1'],ktags:['Revenue Diversification','Financial Product Design','Eligibility Engine','Risk Management'],hook:'COD sellers waited weeks for remittance while their capital sat locked in transit. I designed a same-day advance product that unlocked working capital at the moment of pickup — before delivery, before courier settlement, before the cycle even completed.',problem:"Cash-on-delivery sellers faced a structural liquidity problem: COD value was collected by the courier at delivery and remitted to the seller days or weeks later, depending on the remittance cycle. High-volume sellers effectively extended unsecured credit to buyers and couriers simultaneously, with no mechanism to access that capital early. The capital was real, the shipment had moved, and yet the seller waited.",did:['Identified the product opportunity in the gap between shipment pickup (capital committed) and COD remittance (capital received). The seller had done the hard part — fulfilled the order, handed off to the courier — but had no liquidity until the cycle closed.','Designed FlashPay: a same-day advance of 50–75% of declared COD value triggered at courier pickup confirmation, before delivery, before COD collection, and before any courier settlement. The remaining balance — net of FlashPay fee and actual COD collected — settles per the normal remittance cycle.','Designed the eligibility engine to manage risk: minimum 3 months active shipment history, minimum 100 COD orders in the qualifying period, and RTO rate below 40% at both individual carrier level and individual state level. A breach at either dimension disqualifies the seller. This dual-threshold logic was deliberate — a seller might have clean aggregate RTO numbers but concentrated failure in one carrier or geography.','Owned the product specification across the seller panel flow, eligibility verification, advance calculation logic, fee structure, and reconciliation against final COD settlement. Designed the edge case handling for partial deliveries, returns, and carrier disputes post-advance.','Positioned internally as a VAS revenue product and a retention lever: FlashPay made high-volume COD sellers more financially dependent on Bigship, increasing switching cost and repeat shipment commitment.'],moment:"The dual-threshold eligibility rule was the sharpest design decision. A single aggregate RTO threshold would have approved sellers who looked clean at the top line but had concentrated failure in specific couriers or states — exactly the failure mode that creates bad debt. I built the rule at both levels because the risk profile is different: a seller with 30% aggregate RTO but 60% RTO on one carrier in one state is a very different exposure than a seller with 30% uniformly. The extra logic was worth the engineering complexity.",metrics:[{n:'50–75%',l:'COD advance at pickup'},{n:'Same day',l:'Before delivery or courier settlement'},{n:'Dual-threshold',l:'Carrier-level and state-level RTO eligibility'},{n:'VAS + retention',l:'Revenue and switching-cost product'}],links:['FlashPay product spec','Eligibility engine logic','Seller panel flow screenshots']},
+{id:'overweight',cat:'consumer',title:'Overweight Visibility & Dispute Flow',short:'Seller transparency on weight discrepancies',company:'Bigship · Consumer Panel · PM · 2025–26',tags:['Seller Advocacy','Transparency','Dispute Resolution','Trust'],ktags:['Weight Reconciliation','Overweight Disputes','Evidence Asymmetry'],hook:"Sellers were being billed for weight discrepancies they couldn't see, couldn't prove, and had learned to absorb silently. I negotiated an exclusive sorter image API with Delhivery and built the reconciliation pipeline that made the invisible visible — and the indefensible disputable.",problem:"Bigship charges freight on declared weight (dead or volumetric, whichever is higher). After pickup, courier sorter machines re-scan shipments at hubs — and discrepancies are common, especially with asymmetrical products like furniture or heavy machinery. The reconciliation process was manual: couriers shared an overweight MIS spreadsheet, sellers had no visibility until they received unexplained charges, and raising disputes required going outside the platform entirely. Both sides had incentives to game the system. Sellers underdeclared. Couriers adjusted calibrations. Bigship, as aggregator, sat accountable in the middle without controlling either.",did:["Diagnosed the root problem as evidence asymmetry, not billing complexity. Sellers lacked proof; couriers held it. Shifting visibility to the seller side required a data source we didn't own — so I negotiated direct sorter image access from Delhivery via API, secured because of Bigship's shipment volume. This was an exclusive capability; no other aggregator had it.","Designed the full reconciliation pipeline end to end: sorter images arrive in asynchronous batches via API from Delhivery's hub scanning infrastructure — machines that weigh and photograph every shipment at scale. Built an OCR extraction layer on top of these images to pull shipment dimensions, declared weight, AWB identifiers, and scan metadata. Classified each shipment into one of three states: match (no action), overweight (seller dispute eligible), or underweight (revenue leakage Bigship was absorbing silently — the insight nobody had caught before).","Built systematic exception handling for OCR failure modes: image quality variation (exposure, brightness, contrast), partial scans, duplicate image submissions for the same AWB, and image sequences where not all boxes in a multi-box shipment were scanned. Introduced a manual ERP logging fallback for low-confidence OCR results to maintain data completeness without stalling pipeline throughput. Simultaneously worked to expand OCR model coverage by feeding new failure cases back into the scanning configuration.",'Designed the seller-facing transparency layer in Bigship.direct: declared weight vs courier-billed weight visible per shipment, discrepancy amount and financial impact surfaced proactively, inline dispute raising without a support call, and dispute state tracking (Pending → Approved → Closed).','B2C reconciliation pipeline is live. B2B reconciliation is in progress — the B2B payload has structural ambiguity (no deterministic Master vs Child AWB flagging, asynchronous image batches, incomplete scan coverage) that requires additional pipeline work before it is production-ready.'],moment:"The underweight classification was the call nobody expected. Everyone was focused on overweight — sellers overcharged, sellers disputing. But underweight meant Bigship was under-collecting revenue: couriers billing less than they should have, month after month, with no one tracking it. I added that class to the reconciliation engine specifically because I was building the system fresh and could see all three states. It surfaced months of accumulated leakage that had been invisible in the old MIS process. Sometimes the most important insight is the one you find while solving a different problem.",metrics:[{n:'~40%',l:'Manual reconciliation effort reduced'},{n:'~₹6L/month',l:'Recovered in billing discrepancies'},{n:'Exclusive',l:'Delhivery sorter images — negotiated via API'},{n:'B2C live',l:'B2B reconciliation in progress'}],links:['Overweight panel screenshot','Dispute flow walkthrough','Sorter image integration']},
+{id:'appointments',cat:'consumer',title:'Appointment-Based Delivery Flows',short:'Scheduled delivery for dark stores & B2B',company:'Bigship · Consumer Panel · PM · 2025–26',tags:['Dark Store','Appointment Delivery','B2B Enterprise','0→1'],ktags:['Dark Store Fulfilment','Hyperlocal Delivery','Last-Mile Delivery'],hook:'Dark store operators and enterprise clients don\'t have delivery preferences — they have operational constraints that standard courier timing cannot accommodate. Slotting an appointment option onto the existing booking flow would have served neither segment. I built a separate fulfilment mode from zero, in time for peak season.',problem:'Dark stores operate on precise inventory windows. B2B enterprise clients need guaranteed delivery slots. Our standard courier model was operationally incompatible with how these customers ran.',did:['Conducted discovery with dark store operators and B2B enterprise clients. Identified appointment scheduling as a fundamentally different fulfilment mode, not a variation of the standard flow.','Scoped the greenfield product from zero: slot selection, confirmation, rescheduling, cancellation, and courier coordination protocol.','Designed the seller-facing scheduling interface and the enterprise-facing slot management dashboard — two distinct surfaces for two distinct users.','Led technical feasibility assessment with courier partners on appointment scheduling at volume.','Prioritised time-to-market — used phased rollout: dark stores first, B2B enterprise in phase two. Shipped before peak season.'],moment:"The design insight that unlocked this was treating it as a new product, not a feature bolt-on. Early scoping tried to add appointment options to the existing booking flow. That would have served neither segment well. I wrote a one-page brief arguing for a dedicated fulfilment mode. That framing got the engineering scope right.",metrics:[{n:'~28%',l:'Missed delivery attempts reduced for participating partners'},{n:'2 segments',l:'Dark store + B2B enterprise enabled'},{n:'Phased',l:'Rollout across 2 release cycles'}],links:['Scheduling flow prototype','Appointment UI screenshot','Dark store pilot case']},
+{id:'insurance',cat:'consumer',title:'Third-Party Insurance Integration',short:'Symbi API — zero-friction in-flow insurance',company:'Bigship · Consumer Panel · PM · 2025–26',tags:['VAS','API Integration','Vendor Management','Revenue'],ktags:['Value-Added Services','Third-Party Integration','Vendor Evaluation'],hook:'The rule I set myself: zero added steps. If purchasing insurance required navigating to a new screen, most sellers would skip it. I designed a toggle inside the existing booking flow, not a separate journey — and stress-tested it with sellers before engineering started.',problem:"Sellers needed insurance for high-value shipments but purchasing it required leaving Bigship and managing a separate policy. Friction was high enough that most skipped it and absorbed the risk. We were leaving margin on the table.",did:['Identified third-party insurance as a high-margin VAS opportunity through seller interview analysis.','Led vendor evaluation: assessed multiple insurance API providers against coverage scope, API reliability, and margin structure. Selected Symbi.','Designed the zero-step insurance flow: sellers purchase coverage inside the existing shipment creation flow — one toggle, no new screen.','Wrote the full integration scoping document and technical specification for the Symbi API connection. Owned all vendor communications end to end.','Ran UAT across edge cases including partial coverage, high-value caps, and claims initiation from the seller panel.'],moment:"The design constraint I set was zero added steps. If purchasing insurance required opening a new screen, most sellers would skip it. I prototyped three integration approaches before landing on the toggle-inside-booking-flow version and stress-tested it with sellers at the IIT Delhi event before engineering started.",metrics:[{n:'0 added steps',l:'Toggle inside existing booking flow'},{n:'14%',l:'Attach rate within 45 days of launch'},{n:'₹0',l:'Seller acquisition cost for a high-margin VAS'}],links:['Integration flow diagram','Booking flow screenshot','Symbi API spec (sanitised)']},
+{id:'migration',cat:'consumer',title:'Seller Panel Migration',short:'Bigship.in to Bigship.direct — systems parity exercise',company:'Bigship · Consumer Panel · PM · 2025–26',tags:['Platform Migration','Change Management','Adoption','Training'],ktags:['Seller Migration','Feature Adoption Rate','Product Launch'],hook:'10,000+ active sellers. Two platforms running simultaneously. Zero tolerance for workflow gaps in financial-sensitive flows. The migration from Bigship.in to Bigship.direct was not a rollout. It was a systems parity exercise that I owned end to end.',problem:'Bigship ran two seller surfaces simultaneously. Sellers were habituated to the old system. A poorly managed migration risked churn, support overload, and loss of trust.',did:['Conducted a full workflow audit — mapped every action in the legacy panel to its equivalent in Bigship.direct. Identified gaps and closed them before migration began.','Designed a phased rollout: segmented sellers by volume tier, migrated high-value sellers first, used their feedback to refine before broad rollout.','Built seller-facing in-app guidance: contextual tooltips, a migration checklist, and a dedicated support escalation path.','Ran live product training sessions across Sales, Ops, Finance, and CX — structured walkthroughs with Q&A, tailored by team function.','Instrumented feature adoption rate tracking post-migration — identified low-engagement sellers and followed up directly with high-value accounts.'],moment:"I treat adoption as part of my delivery definition. A product that shipped but isn't used hasn't shipped. The migration experience is a product design problem — the transition UX, the training, the support path — not a communications problem.",metrics:[{n:'10,000+',l:'Active seller accounts migrated'},{n:'4 teams trained',l:'Sales, Ops, Finance, CX'},{n:'Phased',l:'Inactive cohorts first, high-value sellers last'}],links:['Migration checklist (sanitised)','Training summary','Adoption dashboard screenshot']},
+{id:'vyaparsetu',cat:'consumer',title:'Vyapar Setu — Seller Meet & Investor Roadshows',short:'Sole product and tech representative at Bigship\'s flagship external events',company:'Bigship · Public Presence · PM · 2025–26',tags:['Public Speaking','Product Strategy','Investor Communication','Stakeholder Leadership','AI Demo'],ktags:['Roadshow','External Representation','Product Evangelism'],hook:'I was the only person in the room who could explain both what the product did and why it was built that way. At Bigship\'s IIT Delhi Partner Event and Jaipur Seller Meet 2026, I was the sole PM and tech representative — presenting AI product launches, roadmap, and strategy to a joint audience of sellers and investors.',problem:'Bigship needed credible, precise product communication at its most visible external moments. Investors wanted an AI story with depth. Sellers wanted visibility into what was being built for them. Both audiences required someone who understood the product end to end — not just its features, but the thinking behind every decision.',did:['Represented the product function as the sole PM at Bigship\'s flagship external events: IIT Delhi Partner Event and Jaipur Seller Meet (Vyapar Setu) 2026 — the first PM at Bigship to present live to a joint investor and seller audience.','Presented the AI Courier Intelligence product: live walkthrough of the prediction layer, trust-sequencing rationale, prototype demo, and roadmap direction — to 100+ attendees including investors, enterprise sellers, and KAM accounts.','Built and presented the product strategy narrative: 30-product roadmap context, AI-first positioning, revenue product launches (Elevate, FlashPay, Notify), and operational infrastructure investments — framed around business outcomes, not feature lists.','Handled live Q&A from both investor and seller audiences simultaneously — questions ranged from AI model reliability and courier scoring methodology to subscription tier structure and migration timelines.','Prepared all presentation materials independently: structured the narrative arc, designed the slide flow, scripted the demo walkthrough, and stress-tested the content against investor-level scrutiny before the event.'],moment:"The hardest part was not the presentation — it was the dual-audience problem. Investors wanted evidence of AI sophistication and defensibility. Sellers wanted to know what it meant for their shipments next month. The same product story had to land differently for both groups in the same room. I structured the presentation to open with business outcomes (for investors), then pivot to seller-specific impact (for the room), then return to strategic direction (for both). Threading both narratives through one flow without losing either audience — that's the actual PM skill on display.",metrics:[{n:'100+',l:'Attendees — joint investor + seller audience'},{n:'First PM',l:'At Bigship to present at this level externally'},{n:'2 events',l:'IIT Delhi Partner Event + Jaipur Seller Meet 2026'},{n:'Live demo',l:'AI Courier Intelligence prototype — investor-facing'}],links:['Event presentation deck','Vyapar Setu programme','Product roadmap slide (sanitised)']},
+{id:'statemachine',cat:'erp',title:'Seller Lifecycle State Machine',short:'Operational taxonomy redesign — 90K+ sellers under structured governance',company:'Bigship · ERP Platform · PM · 2025–26',tags:['Lifecycle Design','State Machine','Churn Prevention','Automation'],ktags:['Churn Analysis','Lifecycle Marketing','Seller Lifecycle'],hook:'Seller management was entirely ad hoc. No shared definition of active, risky, or churned. No automated triggers. No accountability routing. I redesigned it as a proper lifecycle system — and in doing so, made behavioral intelligence possible for the first time.',problem:'Sales team managed sellers informally. A seller could sit active whether shipping 500 orders or zero. Churn detected by accident. Reassignment happened when someone noticed.',did:["Diagnosed the core problem as semantic: the existing CRM mixed seller intent, call outcomes, and lifecycle state into the same fields. This corrupted reporting, made churn analysis unreliable, and made automation impossible. Standardising the lifecycle required redesigning the underlying data taxonomy first.","Designed the full state machine: Acquisition → Exploring → Interested → Activated → Active → Risky → Dormant → Reshuffle-ready → Churned → Expired → Revived — with deterministic entry and exit criteria for each state. The key innovation was separating seller intent (persistent) from call outcome (transactional), so a single failed call didn't corrupt the lifecycle record.",'Built automated transition logic: no shipments for 14 days → At Risk; 30 days → Churned with revival campaign initiated automatically. 45-day inactivity triggered POC dissociation and reassignment eligibility. 5 consecutive not-interested touchpoints triggered an Expired state. Risky sellers auto-recovered when positive activity resumed — bidirectional state transitions.','Redesigned the disposition capture UX to reduce frontline friction: seller intent auto-fetched from existing record so POCs only needed to log the delta, calling outcome as the sole mandatory field. If capturing data is painful, people corrupt the data. I removed the pain.','Delivered ERP dashboard views segmented by lifecycle state for every sales rep — the first time leadership had accurate visibility into seller health across 90K+ accounts.'],moment:"The deepest insight was that operational taxonomy defines analytical capability. If dispositions are semantically broken — if \"not picked up\" and \"not interested\" live in the same field — then churn analysis breaks, lifecycle automation breaks, and AI breaks too. I was not cleaning a CRM. I was redesigning the operational language layer that all downstream intelligence depends on. The At Risk state was the most important addition: it didn't exist before. The system had Active and Churned with nothing in between. That 14-day window created the proactive intervention opportunity that made the whole system worth building.",metrics:[{n:'~9 days → same-day',l:'Churn identification lag'},{n:'~17%',l:'Churned sellers recovered within 30 days'},{n:'43% → 91%',l:'Disposition capture rate in 3 weeks'},{n:'90K+',l:'Sellers under structured lifecycle governance'}],links:['State machine diagram','Lifecycle dashboard (sanitised)','Churn trigger spec']},
+{id:'callanalysis',cat:'erp',title:'AI Call Intelligence & Voicebot Campaign',short:'Call intelligence across all inbound conversations + AI outbound lead qualification — two systems, one infrastructure base',company:'Bigship · ERP Platform · PM · 2025–26',tags:['LLM','Conversational AI','Voice AI','Prompt Engineering','DPO Alignment','Outbound Automation','Flutter','Bigship Connect'],ktags:['Sentiment Classification','Data Labelling','AI Workflow Design'],hook:"Every sales and support call was happening in a black box — no classification, no QA automation, no escalation routing, no coaching loop. Simultaneously, a dormant lead pool with thousands of behavioural intent signals was being worked manually, one call at a time. I built two connected systems on the same infrastructure: one that turns every conversation into structured operational intelligence, and one that qualifies leads at scale using AI voice.",problem:"Bigship's sales and support teams operated entirely over phone. Business-critical conversations — with leads, active sellers, KAM accounts, escalation stakeholders — were happening with no capture, no prioritisation, and no auditability. QA was sampling-based and slow. Abuse, litigation threats, and high-risk escalations were caught late or missed. Separately, the dormant lead pool had clear intent signals that manual follow-up couldn't act on at volume.",did:["Designed and deployed Bigship Connect: a Flutter Android app installed on all company-managed phones with Airtel SIMs. Every call — whether made by a human sales rep, a support agent, or triggered by the outbound AI campaign — gets recorded, timestamped, mapped to the agent's ERP identity, and becomes fully auditable. This was the shared infrastructure layer that made both systems possible.","Built the AI intelligence layer on top of all inbound calls: transcription via Wispr, then LLM-based classification to detect abuse, litigation threats, and escalation signals across every conversation. QA audits calls against AI flags; scores and summaries auto-shared with the agent and reporting manager. The system processes human calls and AI-initiated calls through the same pipeline.","Solved the false positive problem — words like 'case' or 'sala' triggering abuse flags out of context. Fixed through direct preference optimisation: systematic comparison of AI-flagged calls against human-tagged true positives and negatives, iterative prompt refinement, and DPO-style alignment tuning. Moved from keyword detection to context-aware risk classification.","Designed and deployed the separate AI outbound calling campaign: a voice bot triggering automated calls to dormant leads on three behavioural signals — panel visit without activation, post-signup drop-off, dormant re-engagement after inactivity window. Architecture: Plivo for telephony, LiveKit for real-time audio streaming, Deepgram STT, GPT-4o as the LLM reasoning layer, Azure TTS / ElevenLabs for voice output, VectorDB for contextual response grounding. Evaluated SIP providers: Exotel, Ozonetel, Plivo, FreJun, TATA Tele Business Services.","Resolved the two hardest quality problems in the outbound campaign: voice that sounded animated and robotic, and response capture delays that broke conversational flow. Fine-tuned Llama 3.2 on RunPod using Axolotl and VLLM for Indian accent handling, natural turn-taking, and reduced latency. Built intent classification logic, escalation routing to human reps on qualified signals, and fallback handling for dropped calls and unresponsive leads."],moment:"Two problems, one infrastructure decision. Bigship Connect was the foundation for both systems — the same app, the same call recording pipeline, the same ERP mapping. The inbound intelligence layer and the outbound campaign both run through it. That architectural choice mattered because it meant one audit trail, one identity layer, one place to debug. The hardest product call on the intelligence side was the false positive fix — a system that flags the word 'case' as abuse is worse than no system. I insisted on building the evaluation framework properly: human-tagged ground truth, systematic comparison, preference-based tuning. On the outbound side the latency lesson is the one I carry: in voice AI, a 2-second delay doesn't annoy — it breaks the social contract. Correctness without realism is not a product.",metrics:[{n:'~65%',l:'Escalation review TAT reduction'},{n:'~75%',l:'Support email backlog reduction'},{n:'~50%',l:'Manual outbound follow-up reduced'},{n:'~24%',l:'Lead-to-activation CVR improvement in 6 weeks'}],links:['Call taxonomy diagram','Prompt architecture (sanitised)','Classification accuracy report'],ai:true},{id:'disposition',cat:'erp',title:'Disposition Capture Redesign',short:'From 43% to 91% capture rate in 3 weeks — a friction diagnosis',company:'Bigship · ERP Platform · PM · 2025–26',tags:['Behavioural Design','Sales Operations','Data Quality','Mobile-First','Founder Redirection'],ktags:['Friction Diagnosis','CRM Data Integrity','Mobile UX','Operational Compliance'],hook:"The founder diagnosed empty disposition logs as an accountability problem. I re-diagnosed it as friction. The difference between those two framings is the difference between a training programme and a product fix — and one of them worked.",problem:"Disposition capture rate was at 43%. Sales reps were not logging call outcomes after conversations, which meant lifecycle automation had no signal to act on, churn detection was blind, and leadership had no reliable visibility into sales activity. The instinctive response was to treat this as a compliance problem. The real problem was the tool: desktop-only, multiple mandatory fields, and a flow that asked reps to recall and log details after they had already moved on.",did:['Ran direct observation of post-call rep behaviour — watched what actually happened between hanging up and the next call. Reps were writing notes on paper. The paper was the signal: the tool was designed for an ideal workflow that did not exist. This was not an accountability failure. It was a friction failure.','Proposed a mobile-first solution: a post-call pop-up auto-triggering on the Bigship Connect app immediately after each call ends, at the exact moment of capture when context was fresh. Designed for 30-second completion.','Restructured the disposition taxonomy: separated seller intent (persistent, auto-fetched from the existing lifecycle record) from call outcome (transactional, the only thing that needs updating per call). Made calling outcome the sole mandatory field. Everything else optional.','Made the business case to the founder: this was not a people problem requiring training, it was a product problem requiring redesign. The evidence was the paper notes. Reps were capturing the information — just not in the system. Remove the friction, and compliance follows.','Disposition capture rate moved from 43% to 91% within three weeks of deployment. Lifecycle automation and churn detection gained reliable signal for the first time.'],moment:"The founder's framing was reasonable — 43% capture looks like a discipline problem. But when I watched how reps actually worked, I saw that they were capturing the information, just not in the right place. The paper notes were proof that the intent existed; the gap was entirely in the product. I could have recommended accountability training. Instead I redesigned the moment of capture. The three-week result was not a coincidence — it was the natural outcome of removing friction that should not have been there in the first place.",metrics:[{n:'43% → 91%',l:'Disposition capture rate in 3 weeks'},{n:'Post-call',l:'Auto-triggers at exact moment of context'},{n:'30 sec',l:'Target completion time'},{n:'1 field',l:'Only mandatory input — calling outcome'}],links:['Mobile UX prototype','Disposition taxonomy redesign','Capture rate trend data']},
+{id:'emailticket',cat:'erp',title:'AI Email-to-Ticketing System',short:'Sentiment classification and automated support routing',company:'Bigship · ERP Platform · PM · 2025–26',tags:['AI','Automation','Support Operations','NLP'],ktags:['Sentiment Classification','NLP','Email Automation','AI Workflow'],hook:'Support emails were manually triaged into a growing backlog. I built an AI intake system with sentiment classification that cut the backlog by 75%.',problem:'Inbound support emails manually read, categorised, and routed. Volume made it slow and inconsistent. Urgent emails waited in the same queue as routine ones. SLAs slipping.',did:['Mapped the taxonomy of inbound support emails: type, action required, urgency signals. This became the classification target for the AI workflow.','Built the LLM-based intake layer: email classification by type, sentiment analysis to identify urgency, structured routing to the correct queue.','Designed a conservative confidence threshold: emails the system was not certain about went to human review queue, not dropped.','Measured backlog volume, routing accuracy, and SLA compliance — established baseline before deployment.','Iterated on classification based on routing errors in the first two weeks — feedback loop built into the system from day one.'],moment:"I built the fallback before the main routing path. If an AI system misclassifies an urgent email, that is worse than manual triage. I set the initial confidence threshold conservatively — auto-route only the most certain cases. Coverage started at 60% and raised as accuracy proved out. That sequencing made it trustworthy.",metrics:[{n:'~75%',l:'Support backlog reduction'},{n:'~4 FTE-hrs/day',l:'Manual triage eliminated'},{n:'Conservative threshold',l:'Human fallback for low-confidence routing'}],links:['Email taxonomy spec','Classification architecture','Before/after SLA comparison'],ai:true},
+{id:'pms',cat:'erp',title:'In-House Performance Management System',short:'Built in-house vs Keka — founder redirect and delivery',company:'Bigship · ERP Platform · PM · 2025–26',tags:['Build vs Buy','Incentive Design','Governance','Founder Management'],ktags:['Stakeholder Alignment','RICE Framework','Business Case Development','ERP Systems'],hook:"The founder wanted Keka. Investors wanted clean governance. The timeline required shipping in weeks. I made the case to build in-house, redirected the decision, and delivered it before due diligence closed.",problem:"Third-party PMS couldn't support our incentive slab logic. Founder preferred Keka. Governance gaps becoming visible during fundraising due diligence on a timeline shorter than Keka could deliver.",did:['Assessed the Keka integration path rigorously: timeline, cost, fit against our incentive structure, and the investor signal during due diligence.','Applied RICE scoring to compare Keka vs in-house: reach identical, impact similar, confidence and effort scored significantly in favour of in-house given our timeline.','Built the business case for the founder: faster delivery, exact fit to our incentive slab logic, cleaner governance narrative for investors.','Designed and delivered the in-house PMS: automated incentive slab calculations, role-based dashboards, governance controls with full audit trail.','Founder agreed. Keka deferred. In-house system shipped on the timeline due diligence required.'],moment:"This was a founder management moment. My argument wasn't that Keka was wrong. It was that in-house was faster, cheaper, and a better story for the fundraising round we were actively in. I made the commercial case, not the product preference case. When you're in a room with a founder who has a strong prior, you win by framing your argument in their currency — not yours.",metrics:[{n:'₹2.4L/month',l:'Licensing cost saved vs Keka'},{n:'Weeks not months',l:'Shipped before due diligence closed'},{n:'Full audit trail',l:'Governance-ready for active fundraising round'}],links:['RICE scoring doc (sanitised)','PMS dashboard screenshot','Incentive slab spec']},{id:'spotrate',cat:'erp',title:'Spot Rate Calculator',short:'Real-time enterprise rate calculation for sales reps',company:'Bigship · ERP Platform · PM · 2025–26',tags:['Sales Enablement','Internal Tooling','Enterprise Sales'],ktags:['Enterprise GTM','Sales Cycle Reduction','Self-Serve Evaluation'],hook:'Sales reps were pausing live enterprise conversations to call ops for rate calculations. I built a self-serve tool that gave them the answer in seconds.',problem:'Custom spot rates for enterprise clients required access to the rate card and manual arithmetic. Reps put clients on hold. Every delay signalled uncertainty.',did:['Observed the actual enterprise sales call workflow — identified the consistent put-on-hold pattern.','Designed the ERP calculator: input shipment parameters, select courier, get a formatted spot rate instantly. Output readable directly to a client during a call.','Integrated with the live rate card so the calculator always reflects current pricing without manual updates.','Designed for speed: four inputs, one output. Nothing extra.','Tracked usage rate and deal velocity as success metrics post-launch.'],moment:"This looks small but compounds. Removing a 10-minute delay from every enterprise pricing conversation changes the energy of the whole sales motion. The rep stays in control, the client stays engaged, the deal moves. I tracked this through deal velocity data after launch — not just adoption.",metrics:[{n:'Instant',l:'Rate calculation during live call'},{n:'Eliminated',l:'Ops dependency for rate lookups'},{n:'Live call',l:'Rate calculated without putting client on hold'}],links:['Calculator UI screenshot','Rate card integration spec','Deal velocity metric']},
+{id:'leadmining',cat:'erp',title:'GST/CIN Lead Mining Pool',short:'Lead pool designed as a product — structured, scored, self-improving',company:'Bigship · ERP Platform · PM · 2025–26',tags:['Lead Generation','Data Enrichment','Sales Intelligence','GTM'],ktags:['Enterprise GTM','Account-Based Approach','B2B SaaS'],hook:'The output was not a list. A list has rows. A product has structure, filters, quality signals, and a feedback loop. I designed the lead pool as a product — and built it around how sales reps actually qualify prospects, not how they should.',problem:'Sales reps prospecting from unstructured contact lists — no business context, no size signals, no qualification. Cold outreach is slow, demoralising, and CAC-inefficient.',did:['Identified GST registration and CIN filing data as public qualification signals — business type, turnover range, and geography all inferrable.','Designed a structured scraping and enrichment workflow: pull GST/CIN data, enrich, score by estimated shipping relevance.','Built the output as a segmented, queryable prospect pool with filters for sector, geography, and volume band.','Ran discovery sessions with sales reps on how they actually qualify a prospect and built the scoring model around their criteria.','Delivered with a feedback loop so sales could flag false positives and improve scoring quality over time.'],moment:"The design insight was treating the output as a product, not a list. A list has rows. A product has structure, filters, a quality signal, and a feedback mechanism. I designed it around the sales rep's actual morning workflow. Adoption was immediate.",metrics:[{n:'GST+CIN',l:'Public data as qualification signal'},{n:'Segmented',l:'Sector, geography, volume'},{n:'~31%',l:'Lead-to-seller CVR improvement'}],links:['Lead scoring model (sanitised)','Pool architecture diagram','Adoption data']},{id:'cohortdiscovery',cat:'pp',title:'Cohort Discovery — Strategic Pivot',short:'Data that reversed the founding audience assumption',company:'Programming Pathshala · APM · 2024–2025',tags:['Discovery','Cohort Analysis','Strategic Pivot','Founder Management'],ktags:['Cohort Analysis','Data-Driven Decisions','Product-Market Fit','JTBD'],hook:'The company was building for college students. The data showed working professionals were the real paying customers — higher LTV, lower churn, stronger conviction. I surfaced it, made the case to founders, and the repositioning contributed to approximately 90% of B2C revenue that quarter.',problem:'Founding assumption: college students were the primary audience. Marketing, content, pricing all reflected this. No cohort analysis validating it — founding conviction, not evidence.',did:['Ran systematic cohort analysis in Mixpanel and Google Analytics — segmented by demographic, mapped repeat purchase behaviour, LTV by segment, retention curves, and conversion patterns. The founding assumption was inverted: the highest-value, highest-retention users were working professionals, not the college students the entire product was optimised for.','Identified the real segmentation was not demographic but motivational: autonomy-driven learners (self-paced, price-sensitive, low accountability needs) vs accountability-driven learners (urgency, buying power, structured acceleration needs). Working professionals fell overwhelmingly in the second group.','Built the finding into a clear executive communication: cohort data, LTV difference by segment, strategic implication, and commercial case. Brought it to founders directly. The message was: here is a segment generating significantly higher LTV that we are structurally underserving, and here is what changes if we address it.','Repositioned product suite, pricing, and acquisition targeting around accountability-driven learners. Changes touched content strategy, mentorship workflows, subscription packaging, onboarding, and marketing. Contributed to approximately 90% of B2C revenue in the period following repositioning.','Shipped supporting platform changes: pre-auth value delivery, rule-based onboarding personalisation (beginner-to-expert classification), subscription lifecycle flows (upgrade/downgrade/pause with full state continuity), gamification layer (points tied to watch time and problem difficulty). MoM conversion +18%, bounce rate -15%.'],moment:"Challenging a founding assumption is the hardest PM call there is. The founders had conviction. I was the most junior person in the room. The easier path was to validate the assumption and move on. I went where the data went. The frame that made it land was commercial — not \"you're wrong\" but \"here is a segment generating 3x LTV that we are structurally underserving.\" Same truth. Right frame. The repositioning followed.",metrics:[{n:'~90%',l:'B2C revenue from repositioned segment'},{n:'3×',l:'Higher LTV from working professional segment vs college student'},{n:'+18% / -15%',l:'MoM conversion up, bounce rate down post-repositioning'}],links:['Cohort analysis (anonymised)','Repositioning brief (sanitised)','Revenue attribution data']},
+{id:'assessmentplatform',cat:'pp',title:'B2B Assessment Platform + White-Labeled LMS — 0→1',short:'Judge0-based assessment engine + white-labeled LMS — 15+ universities, 1K+ concurrent users, ₹24L+ ARR',company:'Programming Pathshala · APM · 2024–2025',tags:['0→1','B2B Enterprise','EdTech SaaS','AI Product','Assessment Infrastructure','Judge0','Technical Evaluation','GTM'],ktags:['0-to-1 Product Development','Enterprise GTM','Champion User','Sales Cycle Reduction'],hook:"No assessment infrastructure. No way for enterprise clients to evaluate outcomes or prove learning ROI. Two products needed from zero: a white-labeled LMS for campus deployment, and a proprietary AI-powered assessment platform to replace expensive third-party dependency. I built both — without a QA resource, without a product team, and without a playbook.",problem:"Programming Pathshala sold technical upskilling to enterprise campus clients with no way to prove learning outcomes. Champions couldn't self-serve evidence. Sales cycle was long. No B2B SaaS product to point to.",did:["Owned the full lifecycle of the white-labeled LMS: discovery research across students, placement officers, department heads, and enterprise HR; PRD writing; phased rollout (student-facing → admin dashboard → enterprise white-label); UAT across all three user types; vendor evaluation; and GTM across 15+ campuses.","Identified the key insight that unlocked enterprise sales: placement officers don't buy software — they buy something they can hand to a dean without us in the room. Redesigned the admin dashboard around champion self-service rather than internal reporting — it became the sales deck.","Built a proprietary AI-powered assessment platform to replace DoSelect entirely: Judge0-based sandboxed code execution for live coding evaluation, MCQ and image-based question types, timed assessments, AI-assisted proctoring, automated scoring, and a super-admin problem ingestion panel. Achieved 1K+ concurrent users with zero third-party dependency.","Designed multi-role architecture: Superadmin (internal governance and problem management), Institutional Admin (campus self-serve configuration, branding, reporting), Learner (assessments, coding practice, progress). White-labeling gave institutions perceived ownership — the single biggest driver of procurement speed.","Ran all UAT myself across three user types simultaneously with no dedicated QA resource. Managed edge cases across compiler execution failures, concurrent submission handling, and proctoring flag accuracy. Attended pre-sales demos with placement cells and deans — helped close 15+ campus partnerships directly.","Technical stack I worked with: Judge0 for code execution sandboxing, DoSelect API (audited and replaced), Razorpay for institutional billing, role-based access architecture, SSO-compatible admin flows, and multi-tenant data isolation across campus environments."],moment:"The decision to build in-house rather than continue with DoSelect was not obvious internally. Keeping the third-party tool was faster and lower-risk. I made the case on two counts: institutional clients were being sold a platform they couldn't brand as their own, and the per-assessment cost structure would become a ceiling on enterprise pricing. Building it was the expensive short-term decision. But the sharpest call was the rollout sequence — students first, admins second, enterprise third. The instinct was to build the enterprise layer first because that's where revenue was. I pushed back: an admin dashboard with no learners is impossible to evaluate. Real usage before configuration. That sequence is how we built something campuses adopted instead of something they were sold.",metrics:[{n:'₹24L+',l:'ARR from zero'},{n:'15+',l:'University campuses'},{n:'2,400+',l:'Learners on LMS platform'},{n:'1K+',l:'Concurrent users — zero third-party dependency'},{n:'~20%',l:'Enterprise sales cycle reduction'},{n:'~50%',l:'Problem ingestion time reduced via super-admin panel'}],links:['Admin dashboard (sanitised)','Enterprise pitch deck','Campus partner announcement'],ai:true},
+{id:'fellowship',cat:'pp',title:'Fellowship Program — 0→1 GTM',short:'₹1.5 Cr+ revenue in one quarter from zero',company:'Programming Pathshala · APM · 2024–2025',tags:['0→1','GTM','Revenue Growth','Cohort Product','Go-to-Market Strategy'],ktags:['Product Launch','Revenue Architecture','Sales Enablement','Cohort Design'],hook:'No product, no customers, no playbook. I designed the Fellowship Program from zero, built the go-to-market, and generated ₹1.5 Cr+ in revenue in a single quarter.',problem:'Programming Pathshala needed a new revenue stream that could capture the high-intent, accountability-driven working professional segment identified through the ICP repositioning. The existing product suite was built for self-paced B2C consumption. A structured cohort product for professionals required different packaging, different pricing, different sales motion, and different delivery design.',did:['Designed the Fellowship Program architecture from zero: cohort-based structured learning with defined start dates, mentorship cadence, accountability mechanisms, and placement-focused outcomes. Positioned specifically for working professionals making deliberate career transitions, not casual learners.','Built the GTM from scratch: pricing strategy, sales collateral, outreach motion, intake qualification criteria, and cohort onboarding experience. No prior template, no comparable internal product to reference.','Ran the initial cohort intake end-to-end: from lead qualification through enrolment, onboarding, and first-session delivery. Used qualitative signals from early cohort participants to iterate on programme design before scaling.','Scaled from 0 to 30+ learners, generating ₹1.5 Cr+ in revenue in the first quarter of operation.'],moment:"The sharpest GTM decision was treating the Fellowship as a transformation product, not an education product. The pitch was not \"learn more\" — it was \"change your career trajectory in a defined window, with structure and accountability built in.\" That framing justified the price point, attracted the right learner profile, and made the product defensible in a market full of cheaper alternatives. Getting the positioning right before the first cohort filled made everything else easier.",metrics:[{n:'₹1.5 Cr+',l:'Revenue in first quarter'},{n:'0 → 30+',l:'Learners from launch'},{n:'0→1',l:'Full GTM from no prior template'},{n:'Cohort-based',l:'Accountability-driven product design'}],links:['Programme design doc','Sales collateral','Cohort onboarding flow']},{id:'funnel',cat:'pp',title:'Subscription Funnel Redesign',short:'Landing page → onboarding → payment → first lesson',company:'Programming Pathshala · APM · 2024–2025',tags:['Growth','A/B Testing','Conversion Optimisation','Funnel Analysis'],ktags:['Funnel Analysis','A/B Testing','CRO','Activation Rate','Pricing Strategy'],hook:'The subscription funnel had no measurement, no testing history, no intentional design. I redesigned every stage and improved MoM conversion by 18%.',problem:'No A/B testing framework. No consistent conversion tracking. No pricing experimentation. No data on where users dropped or why.',did:['Instrumented the full funnel with event tracking across every transition point — established clean baseline before changing anything.','Ran qualitative research with current and lapsed users: usability testing and interviews to identify friction points.','Redesigned landing page: reframed value proposition around outcomes, restructured social proof, A/B tested CTA copy across six variants.','Rebuilt onboarding flow: reduced steps, reordered information delivery based on what drove day-1 completion, added progress indicators.','Ran Razorpay checkout improvements and pricing experiments — tested annual vs monthly framing, anchor pricing, and discount structures.'],moment:"The biggest lift came from a copy change, not a UX change. After payment, the first screen had been 'Here's your dashboard.' I replaced it with 'What do you want to be able to do in 30 days?' — anchoring the user to an outcome before showing any product. Day-1 completion improved measurably. That insight reshaped how I think about activation design.",metrics:[{n:'~18%',l:'MoM conversion improvement'},{n:'Full funnel',l:'Landing page through first lesson'},{n:'A/B tested',l:'Copy, pricing, onboarding'}],links:['Funnel before/after data (sanitised)','A/B test summary','Landing page screenshot']},
+{id:'referral',cat:'pp',title:'Referral Growth Loop',short:'Wallet-incentive engine with behavioural triggers',company:'Programming Pathshala · APM · 2024–2025',tags:['Product-Led Growth','Referral System','CAC Reduction','Behavioural Design'],ktags:['PLG','Growth Loops','CAC Reduction','AARRR Framework'],hook:"Acquisition was expensive. The referral mechanic was passive. I redesigned it around the moments when users were actually ready to refer — and drove 28% DAU growth.",problem:'Primary acquisition channel was paid. CAC high. Referral mechanic was a static code in account settings most users never shared.',did:['Analysed behavioural analytics to identify high-likelihood referral moments — where users experienced genuine progress and were emotionally ready to share.','Designed the referral loop around those moments: wallet-incentive prompts surfaced at module completion, streak milestones, and level unlocks.','Built the wallet-incentive system: both referrer and referred received platform credits, keeping value inside the product.','A/B tested incentive structure, prompt timing, and referral message framing across three variants.','Measured full AARRR impact: acquisition from referrals, activation rate of referred users, retention vs paid-acquisition cohorts.'],moment:"'Share with a friend' performs worse than 'You just hit your first milestone — your friends can start here.' The moment of pride is the moment of referral. I designed the prompt to arrive at the exact emotional peak — identified through session behaviour data. Timing wasn't a detail. It was the product.",metrics:[{n:'~28%',l:'DAU increase'},{n:'~₹30K/month',l:'CAC reduction'},{n:'Behavioural',l:'Triggers at high-likelihood moments'}],links:['Referral flow design','A/B test results','Cohort retention comparison']},
+{id:'aipersonalisation',cat:'pp',title:'AI Personalisation MVP',short:'Adaptive homework and learning journey engine',company:'Programming Pathshala · APM · 2024–2025',tags:['AI Product','Personalisation','LTV Improvement','EdTech'],ktags:['AI Product Development','Behavioural Analytics','LTV','Retention Rate'],hook:"The system gave every student the same next lesson regardless of how they were actually doing. Fast learners got bored. Struggling learners got left behind. I built an adaptation layer — and drew a hard line at what it should not adapt.",problem:'Same curriculum sequence for every student regardless of pace or prior knowledge. Students ahead: bored. Students behind: lost. LTV suffering because mismatched students churned.',did:['Mapped behavioural signals: module completion rates, time spent, quiz performance, session frequency, drop-off patterns.','Designed personalisation logic: homework difficulty adjusts based on quiz performance; next module recommendations weighted by completion and time spent.','Built engagement loop: personalised nudges surfaced at predicted drop-off windows.','Defined a productive struggle threshold — the system adapts difficulty but does not let a student bypass a core concept entirely.','Measured LTV improvement and CSAT as primary metrics.'],moment:"The hardest decision was knowing when not to personalise. If a student is struggling, showing easier content feels helpful but lets them avoid the hard concept. I built the productive struggle threshold: reduce difficulty up to a point, then surface human support instead. That boundary made the personalisation educationally sound — not just comfortable.",metrics:[{n:'~15%',l:'LTV improvement'},{n:'97%',l:'CSAT'},{n:'Adaptive',l:'Per user behaviour'}],links:['Personalisation logic spec','LTV cohort data','Engagement loop diagram'],ai:true},
+{id:'phil',cat:'pp',title:'Phil — Built and Killed',short:'AI learning guide: MVP built, PMF tested, discontinued',company:'Programming Pathshala · APM · 2024–2025',status:'killed',tags:['AI Product','User Research','Kill Decision','PMF Testing'],ktags:['Product-Market Fit','Hypothesis Validation','Continuous Discovery','MVP'],hook:"I built the MVP. I ran structured user research. I found weak product-market fit. I recommended stopping. We stopped. This is the hardest kind of PM call.",problem:'Phil was an AI-powered personalised learning guide. Strong internal conviction, good timing with generative AI wave, real resources committed. I led the MVP and was bought in. I wanted it to work.',did:['Led full MVP scoping and build — shipped a testable version on the agreed timeline.','Designed a structured discovery programme: hypothesis log documenting every assumption and what would need to be true for Phil to achieve product-market fit.','Ran user interviews with students across learning stages and separate sessions with teachers using JTBD research framing.','Synthesized findings: problem existed, but Phil was not the solution. Students wanted human accountability. Teachers found the tool added a review layer rather than removing one. Hypothesis log invalidated across multiple core assumptions.','Presented findings with a clear kill recommendation and resource reallocation proposal. Founders agreed. Phil discontinued.'],moment:"I built this. I wanted it to work. Walking into that meeting knowing I was going to recommend discontinuing my own product was genuinely uncomfortable. My job is not to protect what I built — it's to protect the company's resources and users' time. Knowing when to stop is harder than knowing when to build, and it's more valuable.",metrics:[{n:'Structured',l:'Hypothesis log + user research'},{n:'0 months',l:'Wasted past PMF signal'},{n:'Redirected',l:'Engineering to higher-value work'}],links:['Interview synthesis (anonymised)','Hypothesis log (sanitised)','Kill recommendation (first page)'],ai:true},
+{id:'teacheronboarding',cat:'early',title:'Teacher Onboarding System — JetLearn',short:'Built from scratch in a remote-first international org',company:'JetLearn · STEM Teacher Mentor · Jan 2023 – Feb 2024 · UK, Germany, UAE',tags:['Onboarding Design','Process Building','Remote-First','KPI Framework','Python','Remote-First Global','EMEA Markets'],ktags:['Onboarding Flow','KPIs','NPS','Change Management'],hook:"There was no teacher onboarding process — no documentation, no standards. I built it from scratch in a fully remote organisation serving learners across three countries.",problem:'Teachers across geographies, learners in UK, Germany, UAE. No formal onboarding. Wildly varying quality. Long ramp-up. No standard to hire to, train to, or measure against.',did:['Ran discovery with recently joined teachers — what they wished they had known, where they felt underprepared, what they learned by accident.','Designed onboarding as a phased product: platform orientation, pedagogy standards, learner management, performance expectations — each phase building on the last.','Built the KPI framework from scratch: demo conversion rates, learner retention, CSAT, audit performance — with clear definitions and measurement methodology.','Designed specifically for a remote-first environment — asynchronous where possible, synchronous for highest-stakes moments.','Specialised onboarding tracks for neurodivergent learner management across all three markets.',"Technical context: worked across JetLearn's internal ERP-style tooling — role-based dashboards, learner-teacher insight tracking, early-flag governance systems, and reporting infrastructure. Delivered curriculum using Python libraries including Pygame, NumPy, Pandas, OpenCV, Matplotlib, Seaborn, and Plotly; CSA-AP and Swift Playground AI. This was the first direct exposure to enterprise-grade internal platforms — and the origin of the instinct to move from using such systems to building them."],moment:"This was where I first understood that a product doesn't have to be software. The onboarding programme was a product: users, a journey, friction points, a north star metric (time to first confident lesson delivery), an iteration cycle. I designed it the way I would design any product. The instinct I use every day as a PM was formed here — before I had the title.",metrics:[{n:'~40%',l:'Teacher ramp-up reduction'},{n:'~25%',l:'Demo CVR improvement'},{n:'4.3+',l:'Learner NPS'}],links:['Onboarding programme doc (structure only)','KPI framework template','NPS trend data']},
+{id:'whj',cat:'early',title:'Pre-Sales & Learner Personalisation — WhiteHat Jr',short:'150+ students, persona-based adaptation, 95%+ CSAT',company:'WhiteHat Jr (acquired by BYJU\'S) · Coding Instructor · Jun 2020 – Dec 2022 · US Market',tags:['User Empathy','Personalisation','Pre-Sales','Neurodivergent Learners','JavaScript','React','Python','Global Classroom'],ktags:['User Personas','Behavioural Segmentation','CSAT','Voice of Customer'],hook:'Teaching 150+ students across every age group and learning profile built the user empathy that everything I have done since is grounded in.',problem:'Wildly diverse learner base — children, adults, seniors, neurodivergent learners. A single approach worked for none of them. Pre-sales demos required reading a prospect in five minutes and adapting completely.',did:['Developed persona-based pitch adaptation for pre-sales demos — read background, goals, and communication style in the first few minutes and shifted approach completely.','Built personalised, application-first learning roadmaps for each student — curriculum served the learner goal, not the reverse.','Specialised in neurodivergent and adult learners — techniques for ADHD, dyslexia, autism-spectrum not standard across the teaching team.','Improved demo CVR approximately 30% through persona-based adaptation — tracked against personal baseline.','Maintained 95%+ CSAT and 97% retention across 250+ sessions per month over two years.',"Technical stack delivered across 150+ learners: JavaScript, React, Node.js, React Native, Firebase, Git, P5.js, Matter.js, Python (Scikit-learn, TensorFlow, Keras) — building projects from interactive games to beginner ML models. Taught US-market learners aged 5–60 including neurodivergent and adult profiles. This is where information design became instinct: if a 7-year-old can understand your explanation, you understand it."],moment:"Every PM instinct I have about users — observe before you assume, listen past what they say to what they mean, design for their real context not their stated preferences — comes from two years of teaching. I have sat with 150 different humans and watched them learn, struggle, succeed, and disengage. That is not something you get from a research report.",metrics:[{n:'150+',l:'Students across all profiles'},{n:'~30%',l:'Demo CVR improvement'},{n:'95%+',l:'CSAT, 97% retention'}],links:['Teaching methodology note','Learner profile examples (anonymised)']}
+];
+
+const CATS=[
+  {id:'all',label:'All (26)',filter:null},
+  {id:'ai',label:'AI Products',filter:'ai'},
+  {id:'consumer',label:'Bigship · Client Platform',filter:'consumer'},
+  {id:'erp',label:'Bigship · AI & Operations',filter:'erp'},
+  {id:'pp',label:'Programming Pathshala',filter:'pp'},
+  {id:'early',label:'JetLearn & WHJ',filter:'early'}
+];
+
+let activeCat='all', activeId=cases[0].id;
+
+function filteredCases(){
+  if(activeCat==='ai') return cases.filter(c=>c.ai===true);
+  const cat=CATS.find(c=>c.id===activeCat);
+  return cat&&cat.filter?cases.filter(c=>c.cat===cat.filter):cases;
+}
+
+function renderFilters(){
+  const row=document.getElementById('frow');
+  if(!row)return;
+  row.innerHTML=CATS.map(c=>`<button class="fchip${activeCat===c.id?' act':''}" data-cat="${c.id}">${c.label}</button>`).join('');
+  row.querySelectorAll('.fchip').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      activeCat=btn.dataset.cat;
+      const fc=filteredCases();
+      activeId=fc[0]?.id||null;
+      renderFilters();renderSidebar();if(activeId)renderCase(activeId);
+    });
+  });
+}
+
+function renderSidebar(){
+  renderFilters();
+  const sb=document.getElementById('wsb');
+  if(!sb)return;
+  const fc=filteredCases();
+  const catLabel={consumer:'Client Platform',erp:'Internal Systems',pp:'Prog. Pathshala',early:'Early Career',ai:'AI Product'};
+  sb.innerHTML=fc.map(c=>`
+    <div class="sb-item${activeId===c.id?' act':''}" data-id="${c.id}">
+      <div class="sb-cat">${catLabel[c.cat]||''}</div>
+      <div class="sb-title">${c.title}</div>
+      <div class="sb-sub">${c.short}</div>
+    </div>`).join('');
+  sb.querySelectorAll('.sb-item').forEach(el=>{
+    el.addEventListener('click',()=>{
+      activeId = el.dataset.id;
+      // Sync filter chip to the clicked case's category
+      const clickedCase = cases.find(c => c.id === activeId);
+      if (clickedCase && activeCat !== 'all' && activeCat !== 'ai') {
+        // Only auto-sync if we're in a filtered view that doesn't match
+        // Keep 'all' and 'ai' filters stable — don't override them
+      }
+      renderSidebar();
+      renderCase(activeId);
+    });
+  });
+}
+
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+function renderCase(id){
+  const c=cases.find(x=>x.id===id);
+  if(!c)return;
+  const ct=document.getElementById('wct');
+  if(!ct)return;
+  const badge=c.status==='killed'
+    ?'<div class="cs-badges"><span class="cs-badge killed">Discontinued by recommendation</span></div>'
+    :c.status==='indev'
+    ?'<div class="cs-badges"><span class="cs-badge indev">In development</span></div>'
+    :'';
+  ct.innerHTML=`
+    <div class="cs-co">${esc(c.company)}</div>
+    ${badge}
+    <h3 class="cs-title">${esc(c.title)}</h3>
+    <p class="cs-hook">${esc(c.hook)}</p>
+    <div class="cs-tags">${c.tags.map(t=>`<span class="cs-tag">${esc(t)}</span>`).join('')}</div>
+    <hr class="cs-div">
+    <div class="cs-lbl">The Problem</div>
+    <p class="cs-body">${esc(c.problem)}</p>
+    <hr class="cs-div">
+    <div class="cs-lbl">What I Did</div>
+    <ul class="cs-did">${c.did.map(d=>`<li>${esc(d)}</li>`).join('')}</ul>
+    <div class="pm-box">
+      <div class="pm-lbl">The call that mattered</div>
+      <p class="pm-q">${esc(c.moment)}</p>
+    </div>
+    <div class="cs-lbl">Outcomes</div>
+    <div class="metrics">${c.metrics.map(m=>`<div class="m-card"><div class="m-n">${esc(m.n)}</div><div class="m-l">${esc(m.l)}</div></div>`).join('')}</div>
+`;
+  ct.scrollTop=0;
+}
+
+function openCase(id){
+  activeCat='all';
+  activeId=id;
+  renderFilters();
+  renderSidebar();
+  renderCase(id);
+  document.getElementById('work').scrollIntoView({behavior:'smooth'});
+}
+
+function initWork(){renderFilters();renderSidebar();renderCase(activeId)}
+
+/* ── STATS COUNTER ── */
+function countUp(id,from,to,fmt,dur){
+  const el=document.getElementById(id);
+  if(!el)return;
+  const start=performance.now();
+  function tick(now){
+    const p=Math.min((now-start)/dur,1);
+    const e=1-Math.pow(1-p,3);
+    el.textContent=fmt(Math.round(from+(to-from)*e));
+    if(p<1)requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+/* ── SCROLL PROGRESS ── */
+function initProgress(){
+  const bar=document.getElementById('prog');
+  window.addEventListener('scroll',()=>{
+    const max=document.documentElement.scrollHeight-window.innerHeight;
+    bar.style.width=(max>0?(window.scrollY/max)*100:0)+'%';
+  },{passive:true});
+}
+
+/* ── INTERSECTION OBSERVER ── */
+function initObserver(){
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target)}});
+  },{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.sec-h,.fu').forEach(el=>io.observe(el));
+}
+
+/* ── NAV ACTIVE ── */
+function initNavActive(){
+  const links=document.querySelectorAll('.nav-links a[data-s]');
+  const secs=['work','about','skills','timeline','contact'];
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        links.forEach(l=>l.classList.toggle('active',l.dataset.s===e.target.id));
+      }
+    });
+  },{threshold:0.08,rootMargin:'-60px 0px -20% 0px'});
+  secs.forEach(id=>{const el=document.getElementById(id);if(el)io.observe(el)});
+}
+
+/* ── HAMBURGER ── */
+function initHamburger(){
+  const btn=document.getElementById('hbg');
+  const mn=document.getElementById('mnav');
+  if(!btn||!mn)return;
+  btn.addEventListener('click',()=>{
+    const open=mn.classList.toggle('open');
+    btn.classList.toggle('open',open);
+  });
+  mn.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+    mn.classList.remove('open');btn.classList.remove('open');
+  }));
+}
+
+function navigateToFilter(catId) {
+  activeCat = catId;
+  const fc = filteredCases();
+  activeId = fc[0]?.id || null;
+  renderFilters();
+  renderSidebar();
+  if (activeId) renderCase(activeId);
+  document.getElementById('work').scrollIntoView({behavior: 'smooth'});
+}
+
+
+/* ── INIT ── */
+document.addEventListener('DOMContentLoaded',()=>{
+  const cur=document.getElementById('cursor');
+  if(cur){
+    document.addEventListener('mousemove',e=>{
+      cur.style.left=e.clientX+'px';
+      cur.style.top=e.clientY+'px';
+    });
+    document.addEventListener('mouseleave',()=>{cur.style.opacity='0'});
+    document.addEventListener('mouseenter',()=>{cur.style.opacity='1'});
+    document.querySelectorAll('a,button,.sb-item,.fchip').forEach(el=>{
+      el.addEventListener('mouseenter',()=>cur.classList.add('hovering'));
+      el.addEventListener('mouseleave',()=>cur.classList.remove('hovering'));
+    });
+  }
+  initWork();
+  countUp('s1',0,100,n=>`₹${n} Cr`,1500);
+  countUp('s2',0,29,n=>`${n}`,1500);
+  countUp('s3',0,6,n=>`${n}+`,1500);
+  countUp('s4',0,1,n=>`${n}`,1500);
+  initProgress();
+  initObserver();
+  initNavActive();
+  initHamburger();
+});
+</script>
+</body>
+</html>
